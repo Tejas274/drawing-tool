@@ -1,15 +1,21 @@
 <ul>
-    <li><a href="#home">File</a></li>
-    <li><a href="#news">Edit</a></li>
     <li class="dropdown">
-    <a href="javascript:void(0)" class="dropbtn">Insert</a>
+    <a href="javascript:void(0)" class="dropbtn">File</a>
     <div class="dropdown-content">
-        <a href="#">Link 1</a>
-        <a href="#">Link 2</a>
-        <a href="#">Link 3</a>
+        <a href="#" (click)="insertRectangle()">New</a>
+        <a href="#" (click)="downLoadImage()">Save</a>
+        <a href="#" (click)="insertImage()">Print</a> 
+    </div>
+    </li>
+    <li class="dropdown">
+    <a href="javascript:void(0)" class="dropbtn">Shapes</a>
+    <div class="dropdown-content">
+        <a href="#" (click)="insertRectangle()">Rectangle</a>
+        <a href="#" (click)="insertTringle()">Triangle</a>
+        <a href="#" (click)="insertOrganization()">Link 3</a>
     </div>
     </li>
 </ul>
 <br>
-<canvas id="mycanvas" width="500" height="500"></canvas>
+<canvas id="mycanvas" width="640" height="480"></canvas>
 
