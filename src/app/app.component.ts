@@ -74,13 +74,7 @@ insertTringle(){
 
 }
 
-
-insertImage(){
-   
-}
-
-
-draw(){
+drawPencil(){
     
 var el = <HTMLCanvasElement> document.getElementById("mycanvas");
 var ctx = el.getContext('2d');
@@ -103,4 +97,7 @@ el.onmouseup = function() {
 }
 
 
+
+
 }
+
