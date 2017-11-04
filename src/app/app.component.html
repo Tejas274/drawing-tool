@@ -1,17 +1,30 @@
- <div class="navbar">
-  <a href="#home">Home</a>
-  <a href="#news">News</a>
-  <div class="dropdown">
-    <button class="dropbtn">Dropdown
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-content">
-       <a href="#" (click)="insertRectangle()">Rectangle</a>
-        <a href="#" (click)="insertTringle()">Triangle</a>
-        <a href="#" (click)="draw()">Pencil</a>
+<div class="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">File
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" (click)="downLoadImage()">Download</a>
+        </div>
     </div>
+    <div class="dropdown">
+        <button class="dropbtn">Shapes
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" (click)="insertRectangle()">Rectangle</a>
+          <a href="#" (click)="insertTringle()">Triangle</a>
+        </div>
   </div>
+  <div class="dropdown">
+      <button class="dropbtn">Free hand
+          <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="#" (click)="draw()">Pencil</a>
+          <a href="#" (click)="printBrush()">Brush</a>
+      </div>
+  </div> 
 </div> 
-
 <canvas id="mycanvas" width="640" height="480"></canvas>
 
