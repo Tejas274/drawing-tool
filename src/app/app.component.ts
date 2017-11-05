@@ -96,6 +96,15 @@ el.onmouseup = function() {
 
 }
 
+clearCanvas()
+{
+   var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+   var ctx = el.getContext('2d');
+   
+   ctx.clearRect(0, 0,  640, 480);
+
+}
+
 
 
 
