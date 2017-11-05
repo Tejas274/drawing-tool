@@ -38,16 +38,75 @@ insertTringle(){
     window.location.href=image; // it will save locally
   }
 
- printCanvas()  
-{  
+ printBrush()  
+{ 
+      var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+      var ctx = el.getContext('2d');
+
+      ctx.lineWidth = 10;
+      ctx.lineJoin = ctx.lineCap = 'butt';
+
+      var isDrawing, lastPoint;
+
+      el.onmousedown = function(e) {
+      isDrawing = true;
+      lastPoint = { x: e.clientX, y: e.clientY };
+      };
+
+      el.onmousemove = function(e) {
+      if (!isDrawing) return;
+
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(e.clientX, e.clientY);
+      ctx.stroke();
+
+      ctx.moveTo(lastPoint.x - 5, lastPoint.y - 5);
+      ctx.lineTo(e.clientX - 5, e.clientY - 5);
+      ctx.stroke();
+
+      lastPoint = { x: e.clientX, y: e.clientY };
+      };
+
+      el.onmouseup = function() {
+      isDrawing = false;
+      }; 
 
 }
 
+drawPencil(){
+    
+var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+var ctx = el.getContext('2d');
+var isDrawing;
 
-insertImage(){
+el.onmousedown = function(e) {
+  isDrawing = true;
+  ctx.moveTo(e.clientX, e.clientY);
+};
+el.onmousemove = function(e) {
+  if (isDrawing) {
+    ctx.lineTo(e.clientX, e.clientY);
+    ctx.stroke();
+  }
+};
+el.onmouseup = function() {
+  isDrawing = false;
+};
+
+}
+
+clearCanvas()
+{
+   var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+   var ctx = el.getContext('2d');
    
-}
-
-
+   ctx.clearRect(0, 0,  640, 480);
 
 }
+
+
+
+
+}
+

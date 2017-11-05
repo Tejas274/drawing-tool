@@ -1,21 +1,32 @@
-<ul>
-    <li class="dropdown1">
-    <a href="javascript:void(0)" class="dropbtn">File</a>
-    <div class="dropdown-content">
-        <a href="#" (click)="insertRectangle()">New</a>
-        <a href="#" (click)="downLoadImage()">Save</a>
-        <a href="#" (click)="insertImage()">Print</a> 
+<div class="navbar">
+    <div class="dropdown">
+        <button class="dropbtn">File
+            <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" (click)="clearCanvas()">Clear</a>  
+          <a href="#" (click)="downLoadImage()">Download</a>
+        </div>
     </div>
-    </li>
-    <li class="dropdown2">
-    <a href="javascript:void(0)" class="dropbtn">Shapes</a>
-    <div class="dropdown-content">
-        <a href="#" (click)="insertRectangle()">Rectangle</a>
-        <a href="#" (click)="insertTringle()">Triangle</a>
-        <a href="#" (click)="insertOrganization()">Link 3</a>
-    </div>
-    </li>
-</ul>
-<br>
+    <div class="dropdown">
+        <button class="dropbtn">Shapes
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#" (click)="insertRectangle()">Rectangle</a>
+          <a href="#" (click)="insertTringle()">Triangle</a>
+          <a href="#" (click)="drawEllipse()">Ellipse</a>
+        </div>
+  </div>
+  <div class="dropdown">
+      <button class="dropbtn">Free hand
+          <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="#" (click)="drawPencil()">Pencil</a>
+          <a href="#" (click)="printBrush()">Brush</a>
+      </div>
+  </div> 
+</div> 
 <canvas id="mycanvas" width="640" height="480"></canvas>
 
