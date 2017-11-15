@@ -15,9 +15,12 @@ export class AppComponent {
 insertRectangle(){
     var canvas = <HTMLCanvasElement> document.getElementById("mycanvas");
     var ctx = canvas.getContext("2d");
+    var mouseX,mouseY;
     //ctx.fillRect(25, 25, 100, 100);
     //ctx.clearRect(45, 45, 60, 60);
     ctx.strokeRect(50, 50, 50, 50);
+
+   
   }
 
 insertTringle(){
@@ -160,37 +163,49 @@ drawEclipse()
 
 }
 
-drawEllipse(x1, y1, x2, y2)   {
+drawReact()
+{
+  
+  var el : any=  document.getElementById("mycanvas");
+  var ctx = el.getContext('2d');
+  var canvasx =el.offsetLeft;
+  var canvasy = el.offsetTop;
+  
+  var last_mousex , last_mousey =  0;
+  var mousex , mousey =  0;
+  var mousedown = false;
  
-    var el = <HTMLCanvasElement> document.getElementById("mycanvas");
-    var ctx = el.getContext('2d');
-   
-    var radiusX = (x2 - x1) * 0.5,   /// radius for x based on input
-        radiusY = (y2 - y1) * 0.5,   /// radius for y based on input
-        centerX = x1 + radiusX,      /// calc center
-        centerY = y1 + radiusY,
-        step = 0.01,                 /// resolution of ellipse
-        a = step,                    /// counter
-        pi2 = Math.PI * 2 - step;    /// end angle
 
-    /// start a new path
-    ctx.beginPath();
 
-    /// set start point at angle 0
-    ctx.moveTo(centerX + radiusX * Math.cos(0),
-               centerY + radiusY * Math.sin(0));
+  el.onmousedown = function(e) {
+      last_mousex = e.clientX - canvasx;
+      last_mousey = e.clientY - canvasy;
+      mousedown = true;
+      
+    };
 
-    /// create the ellipse    
-    for(; a < pi2; a += step) {
-        ctx.lineTo(centerX + radiusX * Math.cos(a),
-                   centerY + radiusY * Math.sin(a));
-    }
+   el.onmouseup = function() {
+         mousedown = false;
+    };
 
-    /// close it and stroke it for demo
-    ctx.closePath();
-    ctx.strokeStyle = '#000';
-    ctx.stroke();
+    el.onmousemove = function(e) {
+
+        mousex = e.clientX-canvasx;
+      	mousey = e.clientY-canvasy;
+        
+      if(mousedown) { 
+        ctx.clearRect(0,0,640,480); 
+        ctx.beginPath();
+        var width = mousex-last_mousex;
+        var height = mousey-last_mousey;
+        ctx.rect(last_mousex,last_mousey,width,height);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+  };
 }
+
 
 
 
@@ -198,11 +213,9 @@ clearCanvas()
 {
    var el = <HTMLCanvasElement> document.getElementById("mycanvas");
    var ctx = el.getContext('2d');
-   
-   ctx.clearRect(0, 0,  640, 480);
-
+   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0,640, 480);
 }
-
 
 
 }
