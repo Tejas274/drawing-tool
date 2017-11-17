@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -15,10 +16,152 @@ export class AppComponent {
 insertRectangle(){
     var canvas = <HTMLCanvasElement> document.getElementById("mycanvas");
     var ctx = canvas.getContext("2d");
+    var mouseX,mouseY;
     //ctx.fillRect(25, 25, 100, 100);
     //ctx.clearRect(45, 45, 60, 60);
     ctx.strokeRect(50, 50, 50, 50);
+
+   
   }
+
+
+
+insertText()
+{
+
+ console.log("BUTTON CLICKED");
+var canvas = <HTMLCanvasElement> document.getElementById("mycanvas");
+var ctx = canvas.getContext("2d");
+
+// variables used to get mouse position on the canvas
+var $canvas = $("#mycanvas");
+var canvasOffset = $canvas.offset();
+var offsetX = canvasOffset.left;
+var offsetY = canvasOffset.top;
+var scrollX = $canvas.scrollLeft();
+var scrollY = $canvas.scrollTop();
+
+// variables to save last mouse position
+// used to see how far the user dragged the mouse
+// and then move the text by that distance
+var startX;
+var startY;
+
+// an array to hold text objects
+var texts = [];
+
+// this var will hold the index of the hit-selected text
+var selectedText = -1;
+
+// clear the canvas & redraw all texts
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for (var i = 0; i < texts.length; i++) {
+        var text = texts[i];
+        ctx.fillText(text.text, text.x, text.y);
+    }
+}
+
+// test if x,y is inside the bounding box of texts[textIndex]
+function textHittest(x, y, textIndex) {
+    var text = texts[textIndex];
+    return (x >= text.x && x <= text.x + text.width && y >= text.y - text.height && y <= text.y);
+}
+
+// handle mousedown events
+// iterate through texts[] and see if the user
+// mousedown'ed on one of them
+// If yes, set the selectedText to the index of that text
+function handleMouseDown(e) {
+    e.preventDefault();
+    startX = e.clientX - offsetX;
+    startY = e.clientY - offsetY;
+    // Put your mousedown stuff here
+    for (var i = 0; i < texts.length; i++) {
+        if (textHittest(startX, startY, i)) {
+            selectedText = i;
+        }
+    }
+}
+
+// done dragging
+function handleMouseUp(e) {
+    e.preventDefault();
+    selectedText = -1;
+}
+
+// also done dragging
+function handleMouseOut(e) {
+    e.preventDefault();
+    selectedText = -1;
+}
+
+// handle mousemove events
+// calc how far the mouse has been dragged since
+// the last mousemove event and move the selected text
+// by that distance
+function handleMouseMove(e) {
+    if (selectedText < 0) {
+        return;
+    }
+    e.preventDefault();
+    var mouseX = e.clientX - offsetX;
+   var  mouseY =e.clientY - offsetY;
+
+    // Put your mousemove stuff here
+    var dx = mouseX - startX;
+    var dy = mouseY - startY;
+    startX = mouseX;
+    startY = mouseY;
+
+    var text = texts[selectedText];
+    text.x += dx;
+    text.y += dy;
+    draw();
+}
+
+// listen for mouse events
+$("#mycanvas").mousedown(function (e) {
+    handleMouseDown(e);
+});
+$("#mycanvas").mousemove(function (e) {
+    handleMouseMove(e);
+});
+$("#mycanvas").mouseup(function (e) {
+    handleMouseUp(e);
+});
+$("#mycanvas").mouseout(function (e) {
+    handleMouseOut(e);
+});
+
+$("#submit").click(function () {
+
+    console.log("BUTTON CLICKED");
+    // calc the y coordinate for this text on the canvas
+    var y = texts.length * 20 + 20;
+
+    // get the text from the input element
+    var text = {
+        text: $("#theText").val(),
+        x: 20,
+        y: y,
+        width:null,
+        height:null
+    };
+
+    // calc the size of this text for hit-testing purposes
+    ctx.font = "16px verdana";
+    text.width = ctx.measureText(text.text).width;
+    text.height = 16;
+
+    // put this new text in the texts array
+    texts.push(text);
+
+    // redraw everything
+    draw();
+
+});
+} 
 
 insertTringle(){
     var canvas = <HTMLCanvasElement> document.getElementById("mycanvas");
@@ -160,49 +303,57 @@ drawEclipse()
 
 }
 
-drawEllipse(x1, y1, x2, y2)   {
+drawReact()
+{
+  
+  var el : any=  document.getElementById("mycanvas");
+  var ctx = el.getContext('2d');
+  var canvasx =el.offsetLeft;
+  var canvasy = el.offsetTop;
+  
+  var last_mousex , last_mousey =  0;
+  var mousex , mousey =  0;
+  var mousedown = false;
  
-    var el = <HTMLCanvasElement> document.getElementById("mycanvas");
-    var ctx = el.getContext('2d');
-   
-    var radiusX = (x2 - x1) * 0.5,   /// radius for x based on input
-        radiusY = (y2 - y1) * 0.5,   /// radius for y based on input
-        centerX = x1 + radiusX,      /// calc center
-        centerY = y1 + radiusY,
-        step = 0.01,                 /// resolution of ellipse
-        a = step,                    /// counter
-        pi2 = Math.PI * 2 - step;    /// end angle
 
-    /// start a new path
-    ctx.beginPath();
 
-    /// set start point at angle 0
-    ctx.moveTo(centerX + radiusX * Math.cos(0),
-               centerY + radiusY * Math.sin(0));
+  el.onmousedown = function(e) {
+      last_mousex = e.clientX - canvasx;
+      last_mousey = e.clientY - canvasy;
+      mousedown = true;
+      
+    };
 
-    /// create the ellipse    
-    for(; a < pi2; a += step) {
-        ctx.lineTo(centerX + radiusX * Math.cos(a),
-                   centerY + radiusY * Math.sin(a));
-    }
+   el.onmouseup = function() {
+         mousedown = false;
+    };
 
-    /// close it and stroke it for demo
-    ctx.closePath();
-    ctx.strokeStyle = '#000';
-    ctx.stroke();
+    el.onmousemove = function(e) {
+
+        mousex = e.clientX-canvasx;
+      	mousey = e.clientY-canvasy;
+        
+      if(mousedown) { 
+        ctx.clearRect(0,0,640,480); 
+        ctx.beginPath();
+        var width = mousex-last_mousex;
+        var height = mousey-last_mousey;
+        ctx.rect(last_mousex,last_mousey,width,height);
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+  };
 }
-
 
 
 clearCanvas()
 {
    var el = <HTMLCanvasElement> document.getElementById("mycanvas");
    var ctx = el.getContext('2d');
-   
-   ctx.clearRect(0, 0,  640, 480);
-
+   ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0,640, 480);
 }
-
 
 
 }
