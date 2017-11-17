@@ -8,13 +8,27 @@
           <a href="#" (click)="downLoadImage()">Download</a>
         </div>
     </div>
+    
+    <div class="dropdown">
+        <button class="dropbtn">Insert
+            <i class="fa fa-caret-down"></i>
+        </button>
+
+       
+         <div class="dropdown-content">
+           <a href="#" (click)="insertText()" ng-click="show = 4">Text</a>  
+         </div>
+    </div>
+     
+
+
     <div class="dropdown">
         <button class="dropbtn">Shapes
           <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
           <a href="#" (click)="drawReact()">Rectangle</a>
-          <a href="#" (click)="insertTringle()">Triangle</a>
+          <a href="#" (click)="drawTringle()">Triangle</a>
           <a href="#" (click)="drawEclipse()">Ellipse</a>
         </div>
   </div>
@@ -29,5 +43,9 @@
   </div> 
 </div> 
 <canvas id="mycanvas" width="640" height="480"></canvas>
-<div id="output"></div>
+<br>
 
+
+<input id="theText" type="text">
+<button id="submit">Draw text on canvas</button><br>
+ <div id="output"></div>
