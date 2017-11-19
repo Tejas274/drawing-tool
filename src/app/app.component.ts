@@ -9,6 +9,8 @@ declare var $: any;
 export class AppComponent {
   title = 'app';
 
+
+
  insertOrganization(){
     console.log("hello");
   }
@@ -217,24 +219,34 @@ printBrush()
 }
 
 drawPencil(){
-    
-var el = <HTMLCanvasElement> document.getElementById("mycanvas");
-var ctx = el.getContext('2d');
-var isDrawing;
+      var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+      var ctx = el.getContext('2d');
 
-el.onmousedown = function(e) {
-  isDrawing = true;
-  ctx.moveTo(e.clientX, e.clientY);
-};
-el.onmousemove = function(e) {
-  if (isDrawing) {
-    ctx.lineTo(e.clientX, e.clientY);
-    ctx.stroke();
-  }
-};
-el.onmouseup = function() {
-  isDrawing = false;
-};
+
+      var isDrawing, lastPoint;
+
+      el.onmousedown = function(e) {
+      isDrawing = true;
+      lastPoint = { x: e.clientX, y: e.clientY };
+      };
+
+      el.onmousemove = function(e) {
+      if (!isDrawing) return;
+
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+      ctx.lineTo(e.clientX, e.clientY);
+      ctx.stroke();
+
+
+      lastPoint = { x: e.clientX, y: e.clientY };
+      };
+
+      el.onmouseup = function() {
+      isDrawing = false;
+      };
+
+
 
 }
 
@@ -347,12 +359,20 @@ drawReact()
 }
 
 
+setColor(val)
+{
+   var el : any=  document.getElementById("mycanvas");
+   var ctx = el.getContext('2d'); 
+   ctx.strokeStyle = val;
+}
+
+
 clearCanvas()
 {
    var el = <HTMLCanvasElement> document.getElementById("mycanvas");
    var ctx = el.getContext('2d');
    ctx.setTransform(1, 0, 0, 1, 0, 0);
-  ctx.clearRect(0, 0,640, 480);
+  ctx.clearRect(0, 0,ctx.canvas.width,ctx.canvas.height);
 }
 
 
