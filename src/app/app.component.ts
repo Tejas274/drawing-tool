@@ -57,11 +57,16 @@ var selectedText = -1;
 
 // clear the canvas & redraw all texts
 function draw() {
+    var el1 = <HTMLCanvasElement> document.getElementById("mycanvas");
+var ctx1 = el1.getContext('2d');
+var imageData = ctx1.getImageData(0, 0, 640, 480);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.putImageData(imageData, 0, 0);
     for (var i = 0; i < texts.length; i++) {
         var text = texts[i];
         ctx.fillText(text.text, text.x, text.y);
     }
+    this.insertText();
 }
 
 // test if x,y is inside the bounding box of texts[textIndex]
@@ -138,7 +143,7 @@ $("#mycanvas").mouseout(function (e) {
 
 $("#submit").click(function () {
 
-    console.log("BUTTON CLICKED");
+    console.log("BUTTON CLICKED 1");
     // calc the y coordinate for this text on the canvas
     var y = texts.length * 20 + 20;
 
@@ -254,12 +259,18 @@ drawEclipse()
 {
 
     var el = <HTMLCanvasElement> document.getElementById("mycanvas");
+    
     var ctx = el.getContext('2d');
+    var imageData = ctx.getImageData(0, 0, 640, 480);
+    
     var isDrawing,x1,y1,isDown=false,x2,y2;
-
+    var temp = 1;
     ctx.translate(0.5, 0.5);  
 
     el.onmousedown = function(e) {
+        var el1 = <HTMLCanvasElement> document.getElementById("mycanvas");
+var ctx1 = el1.getContext('2d');
+imageData = ctx1.getImageData(0, 0, 640, 480);
       var rect = el.getBoundingClientRect();
       x1 = e.clientX - rect.left;
       y1 = e.clientY - rect.top;
@@ -277,9 +288,10 @@ drawEclipse()
        var rect = el.getBoundingClientRect(),
        x2 = e.clientX - rect.left,
        y2 = e.clientY - rect.top;
-       
-
-       ctx.clearRect(0, 0, 640, 480);  
+       ctx.clearRect(0, 0, 640, 480);
+       console.log(imageData)
+        ctx.putImageData(imageData, 0, 0);
+       //ctx.clearRect(0, 0, 640, 480);  
    
     var radiusX = (x2 - x1) * 0.5,   /// radius for x based on input
         radiusY = (y2 - y1) * 0.5,   /// radius for y based on input
@@ -290,7 +302,10 @@ drawEclipse()
         pi2 = Math.PI * 2 - step;    /// end angle
 
     /// start a new path
+    //if(temp){
     ctx.beginPath();
+    temp = 0;
+    //}
 
     /// set start point at angle 0
     ctx.moveTo(centerX + radiusX * Math.cos(0),
@@ -320,8 +335,16 @@ drawReact()
   
   var el : any=  document.getElementById("mycanvas");
   var ctx = el.getContext('2d');
-  var canvasx =el.offsetLeft;
-  var canvasy = el.offsetTop;
+  var imageData = ctx.getImageData(0, 0, 640, 480);
+  //var rect = el.getBoundingClientRect();
+ 
+  var canvasOffset = $("#mycanvas").offset();
+  var canvasx= canvasOffset.left;
+  var canvasy= canvasOffset.top;
+   
+
+  //var canvasx =rect.offsetLeft;
+  //var canvasy = rect.offsetTop;
   
   var last_mousex , last_mousey =  0;
   var mousex , mousey =  0;
@@ -330,6 +353,9 @@ drawReact()
 
 
   el.onmousedown = function(e) {
+      var el1 = <HTMLCanvasElement> document.getElementById("mycanvas");
+var ctx1 = el1.getContext('2d');
+imageData = ctx1.getImageData(0, 0, 640, 480);
       last_mousex = e.clientX - canvasx;
       last_mousey = e.clientY - canvasy;
       mousedown = true;
@@ -346,12 +372,14 @@ drawReact()
       	mousey = e.clientY-canvasy;
         
       if(mousedown) { 
-        ctx.clearRect(0,0,640,480); 
+
+        console.log("finsihed."); 
+        ctx.clearRect(0, 0, 640, 480);  
+        ctx.putImageData(imageData, 0, 0);
         ctx.beginPath();
         var width = mousex-last_mousex;
         var height = mousey-last_mousey;
         ctx.rect(last_mousex,last_mousey,width,height);
-        ctx.strokeStyle = 'black';
         ctx.lineWidth = 2;
         ctx.stroke();
       }
