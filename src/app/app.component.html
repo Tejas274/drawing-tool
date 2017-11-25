@@ -28,9 +28,11 @@
         </button>
         <div class="dropdown-content">
           <a href="#" (click)="drawReact()">Rectangle</a>
-          <a href="#" (click)="drawTringle()">Triangle</a>
           <a href="#" (click)="drawEclipse()">Ellipse</a>
         </div>
+
+
+
   </div>
   <div class="dropdown">
       <button class="dropbtn">Free hand
@@ -41,9 +43,31 @@
           <a href="#" (click)="printBrush()">Brush</a>
       </div>
   </div> 
+
+<div class="dropdown">
+      <button class="dropbtn">Color
+          <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+          <a href="#" (click)="setColor('blue')">Blue</a>
+          <a href="#" (click)="setColor('red')">Red</a>
+          <a href="#" (click)="setColor('green')">Green</a>
+          <a href="#" (click)="setColor('yellow')">Yellow</a>
+          <a href="#" (click)="setColor('gray')">Gray</a>
+      </div>
+  </div> 
+
+
+
 </div> 
+
+
+   
+
 <canvas id="mycanvas" width="640" height="480"></canvas>
 <br>
+
+
 
 
 <input id="theText" type="text">
